@@ -1,13 +1,14 @@
-// #include <MEL/Communications/Http.hpp>
-// #include <MEL/Logging/Log.hpp>
-#include <Mahi/Util.hpp>
-#include <Mahi/Com.hpp>
+#include <Mahi/Com/Http.hpp>
+#include <Mahi/Util/Logging/Log.hpp>
+// #include <Mahi/Util.hpp>
+// #include <Mahi/Com.hpp>
 #include <cctype>
 #include <algorithm>
 #include <iterator>
 #include <sstream>
 #include <limits>
 
+using namespace mahi::util;
 
 namespace
 {
@@ -21,8 +22,8 @@ namespace
 }
 
 
-namespace mel
-{
+namespace mahi {
+namespace com {
 ////////////////////////////////////////////////////////////
 Http::Request::Request(const std::string& uri, Method method, const std::string& body)
 {
@@ -387,4 +388,5 @@ Http::Response Http::send_request(const Http::Request& request, Time timeout)
     return received;
 }
 
-} // namespace mel
+} // namespace mahi
+} // namespace com

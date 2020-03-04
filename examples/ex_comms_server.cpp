@@ -46,7 +46,8 @@
  *  leaving the -i option unspecied (it will default to the local host IP).
  */
 
-using namespace mel;
+using namespace mahi::util;
+using namespace mahi::com;
 
 ctrl_bool stop(false);
 bool my_handler(CtrlEvent event) {

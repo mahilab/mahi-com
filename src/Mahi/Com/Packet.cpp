@@ -1,5 +1,5 @@
-// #include <MEL/Communications/Packet.hpp>
-// #include <MEL/Communications/Socket.hpp>
+// #include <Mahi/Com/Packet.hpp>
+// #include <Mahi/Com/Socket.hpp>
 #include <Mahi/Com.hpp>
 #include <cstring>
 #include <cwchar>
@@ -28,8 +28,10 @@
 #include <fcntl.h>
 #endif
 
-namespace mel
-{
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // CLASS DEFINITIONS
@@ -388,7 +390,8 @@ void Packet::on_receive(const void* data, std::size_t size) {
     append(data, size);
 }
 
-} // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // APAPTED FROM: SFML (https://www.sfml-dev.org/)

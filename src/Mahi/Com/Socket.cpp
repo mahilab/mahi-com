@@ -1,5 +1,5 @@
-// #include <MEL/Communications/Socket.hpp>
-// #include <MEL/Logging/Log.hpp>
+// #include <Mahi/Com/Socket.hpp>
+// #include <Mahi/Logging/Log.hpp>
 #include <Mahi/Util.hpp>
 #include <Mahi/Com.hpp>
 #include <cstring>
@@ -29,8 +29,10 @@
 #include <fcntl.h>
 #endif
 
-namespace mel
-{
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // CLASS DEFINITIONS
@@ -69,7 +71,7 @@ void Socket::create()
     if (socket_ == invalid_socket()) {
         SocketHandle handle = socket(PF_INET, type_ == Tcp ? SOCK_STREAM : SOCK_DGRAM, 0);
         if (handle == invalid_socket())         {
-            LOG(mel::Error) << "Failed to create socket";
+            LOG(util::Error) << "Failed to create socket";
             return;
         }
         create(handle);
@@ -103,7 +105,7 @@ void Socket::create(SocketHandle handle) {
             // Enable broadcast by default for UDP sockets
             int yes = 1;
             if (setsockopt(socket_, SOL_SOCKET, SO_BROADCAST, reinterpret_cast<char*>(&yes), sizeof(yes)) == -1) {
-                LOG(mel::Error) << "Failed to enable broadcast on UDP socket";
+                LOG(util::Error) << "Failed to enable broadcast on UDP socket";
             }
         }
     }
@@ -210,13 +212,13 @@ void Socket::set_blocking(SocketHandle sock, bool block) {
     if (block)
     {
         if (fcntl(sock, F_SETFL, status & ~O_NONBLOCK) == -1) {
-            LOG(mel::Error) << "Failed to set file status flags: " << errno;
+            LOG(util::Error) << "Failed to set file status flags: " << errno;
         }
     }
     else
     {
         if (fcntl(sock, F_SETFL, status | O_NONBLOCK) == -1) {
-           LOG(mel::Error) << "Failed to set file status flags: " << errno;
+           LOG(util::Error) << "Failed to set file status flags: " << errno;
         }
 
     }
@@ -244,7 +246,8 @@ Socket::Status Socket::get_error_status() {
 
 #endif
 
-} // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // APAPTED FROM: SFML (https://www.sfml-dev.org/)

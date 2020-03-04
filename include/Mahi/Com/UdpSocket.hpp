@@ -21,12 +21,13 @@
 
 #pragma once
 
-// #include <MEL/Communications/IpAddress.hpp>
-// #include <MEL/Communications/Socket.hpp>
+// #include <Mahi/Communications/IpAddress.hpp>
+// #include <Mahi/Communications/Socket.hpp>
 #include <Mahi/Com.hpp>
 #include <vector>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // FORWAD DECLARATION
@@ -136,7 +137,8 @@ private:
                                 ///< in Receive(Packet)
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // CLASS DOCUMENTATION

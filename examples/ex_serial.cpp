@@ -3,7 +3,8 @@
 #include <Mahi/Util.hpp>
 #include <Mahi/Com.hpp>
 
-using namespace mel;
+using namespace mahi::util;
+using namespace mahi::com;
 
 int main() {
 

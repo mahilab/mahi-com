@@ -30,7 +30,8 @@
 #include <thread>
 
 using namespace std;
-using namespace mel;
+using namespace mahi::util;
+using namespace mahi::com;
 
 //==============================================================================
 // CONSTANTS AND GLOBALS

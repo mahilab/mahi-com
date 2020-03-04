@@ -20,12 +20,13 @@
 // Author(s): Evan Pezent (epezent@rice.edu)
 
 #pragma once
-// #include <MEL/Communications/Socket.hpp>
-// #include <MEL/Core/Time.hpp>
-#include <Mahi/Util.hpp>
-#include <Mahi/Com.hpp>
+#include <Mahi/Com/Socket.hpp>
+#include <Mahi/Util/Timing/Time.hpp>
+// #include <Mahi/Util.hpp>
+// #include <Mahi/Com.hpp>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // FORWARD DECLARATIONS
@@ -69,7 +70,7 @@ public:
     /// If the socket was previously connected, it is first disconnected.
     Status connect(const IpAddress& remote_address,
                    unsigned short remote_port,
-                   Time timeout = Time::Zero);
+                   util::Time timeout = util::Time::Zero);
 
     /// Disconnect the socket from its remote peer
     ///
@@ -120,7 +121,7 @@ private:
     struct PendingPacket {
         PendingPacket();
 
-        uint32 Size;               ///< Data of packet size
+        util::uint32 Size;               ///< Data of packet size
         std::size_t SizeReceived;  ///< Number of size bytes received so far
         std::vector<char> Data;    ///< Data of the packet
     };
@@ -129,7 +130,8 @@ private:
                                     ///< being received
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // CLASS DOCUMENTATION

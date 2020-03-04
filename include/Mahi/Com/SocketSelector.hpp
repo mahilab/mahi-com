@@ -21,10 +21,11 @@
 
 #pragma once
 
-// #include <MEL/Core/Time.hpp>
-#include <Mahi/Util.hpp>
+#include <Mahi/Util/Timing/Time.hpp>
+// #include <Mahi/Util.hpp>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 class Socket;
 
@@ -86,7 +87,7 @@ public:
     /// \return True if there are sockets ready, false otherwise
     ///
     /// \see is_ready
-    bool wait(Time timeout = Time::Zero);
+    bool wait(util::Time timeout = util::Time::Zero);
 
     /// \brief Test a socket to know if it is ready to receive data
     ///
@@ -119,7 +120,8 @@ private:
                                 ///< requires OS-specific types)
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 /// \class mel::SocketSelector
 /// \ingroup communications

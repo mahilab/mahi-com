@@ -1,7 +1,7 @@
-// #include <MEL/Communications/IpAddress.hpp>
-// #include <MEL/Communications/Socket.hpp>
-// #include <MEL/Communications/Http.hpp>
-#include <Mahi/Com.hpp>
+#include <Mahi/Com/IpAddress.hpp>
+#include <Mahi/Com/Socket.hpp>
+#include <Mahi/Com/Http.hpp>
+// #include <Mahi/Com.hpp>
 #include <cstring>
 #include <utility>
 
@@ -29,7 +29,10 @@
 #include <fcntl.h>
 #endif
 
-namespace mel {
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // CLASS DEFINITIONS
@@ -220,7 +223,8 @@ std::ostream& operator <<(std::ostream& stream, const IpAddress& address) {
     return stream << address.to_string();
 }
 
-} // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // APAPTED FROM: SFML (https://www.sfml-dev.org/)

@@ -1,7 +1,7 @@
-// #include <MEL/Communications/TcpSocket.hpp>
-// #include <MEL/Communications/IpAddress.hpp>
-// #include <MEL/Communications/Packet.hpp>
-// #include <MEL/Logging/Log.hpp>
+// #include <Mahi/Com/TcpSocket.hpp>
+// #include <Mahi/Com/IpAddress.hpp>
+// #include <Mahi/Com/Packet.hpp>
+// #include <Mahi/Logging/Log.hpp>
 #include <Mahi/Util.hpp>
 #include <Mahi/Com.hpp>
 #include <algorithm>
@@ -45,8 +45,10 @@ namespace
     #endif
 }
 
-namespace mel
-{
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 TcpSocket::TcpSocket() :
 Socket(Tcp)
 {
@@ -212,7 +214,7 @@ void TcpSocket::disconnect()
 
 Socket::Status TcpSocket::send(const void* data, std::size_t size){
     if (!is_blocking()) {
-        LOG(mel::Warning) << "Partial sends might not be handled properly";
+        LOG(util::Warning) << "Partial sends might not be handled properly";
     }
     std::size_t sent;
     return send(data, size, sent);
@@ -224,7 +226,7 @@ Socket::Status TcpSocket::send(const void* data, std::size_t size, std::size_t& 
     // Check the parameters
     if (!data || (size == 0))
     {
-        LOG(mel::Error) << "Cannot send data over the network (no data to send)";
+        LOG(util::Error) << "Cannot send data over the network (no data to send)";
         return Error;
     }
 
@@ -259,7 +261,7 @@ Socket::Status TcpSocket::receive(void* data, std::size_t size, std::size_t& rec
     // Check the destination buffer
     if (!data)
     {
-        LOG(mel::Error) << "Cannot receive data from the network (the destination buffer is invalid)";
+        LOG(util::Error) << "Cannot receive data from the network (the destination buffer is invalid)";
         return Error;
     }
 
@@ -396,7 +398,8 @@ Data        ()
 
 }
 
-} // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // APAPTED FROM: SFML (https://www.sfml-dev.org/)

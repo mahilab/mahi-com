@@ -1,7 +1,7 @@
-// #include <MEL/Communications/UdpSocket.hpp>
-// #include <MEL/Communications/Packet.hpp>
-// #include <MEL/Communications/Socket.hpp>
-// #include <MEL/Logging/Log.hpp>
+// #include <Mahi/Com/UdpSocket.hpp>
+// #include <Mahi/Com/Packet.hpp>
+// #include <Mahi/Com/Socket.hpp>
+// #include <Mahi/Logging/Log.hpp>
 #include <Mahi/Util.hpp>
 #include <Mahi/Com.hpp>
 #include <algorithm>
@@ -30,7 +30,10 @@
 #include <fcntl.h>
 #endif
 
-namespace mel {
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // CLASS DEFINITIONS
@@ -71,7 +74,7 @@ Socket::Status UdpSocket::bind(unsigned short port, const IpAddress& address) {
     // Bind the socket
     sockaddr_in addr = Socket::create_address(address.to_integer(), port);
     if (::bind(get_handle(), reinterpret_cast<sockaddr*>(&addr), sizeof(addr)) == -1) {
-        LOG(mel::Error) << "Failed to bind socket to port " << port;
+        LOG(util::Error) << "Failed to bind socket to port " << port;
         return Error;
     }
 
@@ -89,7 +92,7 @@ Socket::Status UdpSocket::send(const void* data, std::size_t size, const IpAddre
 
     // Make sure that all the data will fit in one datagram
     if (size > MaxDatagramSize) {
-        LOG(mel::Error) << "Cannot send data over the network "
+        LOG(util::Error) << "Cannot send data over the network "
             << "(the number of bytes to send is greater than mel::UdpSocket::MaxDatagramSize)";
         return Error;
     }
@@ -115,7 +118,7 @@ Socket::Status UdpSocket::receive(void* data, std::size_t size, std::size_t& rec
 
     // Check the destination buffer
     if (!data) {
-        LOG(mel::Error) << "Cannot receive data from the network (the destination buffer is invalid)";
+        LOG(util::Error) << "Cannot receive data from the network (the destination buffer is invalid)";
         return Error;
     }
 
@@ -170,7 +173,8 @@ Socket::Status UdpSocket::receive(Packet& packet, IpAddress& remoteAddress, unsi
     return status;
 }
 
-} // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // APAPTED FROM: SFML (https://www.sfml-dev.org/)

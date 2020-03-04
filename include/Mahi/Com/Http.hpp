@@ -20,18 +20,19 @@
 // Author(s): Evan Pezent (epezent@rice.edu)
 
 #pragma once
-// #include <MEL/Communications/IpAddress.hpp>
-// #include <MEL/Communications/TcpSocket.hpp>
-// #include <MEL/Core/Time.hpp>
-// #include <MEL/Core/NonCopyable.hpp>
-#include <Mahi/Util.hpp>
-#include <Mahi/Com.hpp>
+#include <Mahi/Com/IpAddress.hpp>
+#include <Mahi/Com/TcpSocket.hpp>
+#include <Mahi/Util/Timing/Time.hpp>
+#include <Mahi/Util/NonCopyable.hpp>
+// #include <Mahi/Util.hpp>
+// #include <Mahi/Com.hpp>
 #include <map>
 #include <string>
 
-namespace mel {
+namespace mahi {
+namespace com {
 /// A HTTP client
-class Http : NonCopyable {
+class Http : util::NonCopyable {
 public:
     /// Define a HTTP request
     class Request {
@@ -320,7 +321,7 @@ public:
     /// \param timeout Maximum time to wait
     ///
     /// \return Server's response
-    Response send_request(const Request& request, Time timeout = Time::Zero);
+    Response send_request(const Request& request, util::Time timeout = util::Time::Zero);
 
 private:
     TcpSocket connection_;  ///< Connection to the host
@@ -329,7 +330,8 @@ private:
     unsigned short port_;   ///< Port used for connection with host
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 /// \class mel::Http
 /// \ingroup network

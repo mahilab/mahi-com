@@ -21,14 +21,15 @@
 
 #pragma once
 
-// #include <MEL/Core/Time.hpp>
-// #include <MEL/Core/Types.hpp>
+// #include <Mahi/Core/Time.hpp>
+// #include <Mahi/Core/Types.hpp>
 #include <Mahi/Util.hpp>
 #include <istream>
 #include <ostream>
 #include <string>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // CLASS DECLARATION
@@ -60,7 +61,7 @@ public:
     /// Calling IpAddress(a, b, c, d) is equivalent to calling
     /// IpAddress("a.b.c.d"), but safer as it doesn't have to
     /// parse a string to get the address components.
-    IpAddress(uint8 byte0, uint8 byte1, uint8 byte2, uint8 byte3);
+    IpAddress(util::uint8 byte0, util::uint8 byte1, util::uint8 byte2, util::uint8 byte3);
 
     /// Construct the address from a 32-bits integer
     ///
@@ -68,7 +69,7 @@ public:
     /// the address directly. It should be used for optimization
     /// purposes, and only if you got that representation from
     /// IpAddress::to_integer().
-    explicit IpAddress(uint32 address);
+    explicit IpAddress(util::uint32 address);
 
     /// Get a string representation of the address
     ///
@@ -84,7 +85,7 @@ public:
     /// (like sending the address through a socket).
     /// The integer produced by this function can then be converted
     /// back to a mel::IpAddress with the proper constructor.
-    uint32 to_integer() const;
+    util::uint32 to_integer() const;
 
     /// Get the computer's local address
     ///
@@ -108,7 +109,7 @@ public:
     /// server, you may use a time limit if you don't want your program
     /// to be possibly stuck waiting in case there is a problem; this
     /// limit is deactivated by default.
-    static IpAddress get_public_address(Time timeout = Time::Zero);
+    static IpAddress get_public_address(util::Time timeout = util::Time::Zero);
 
     static const IpAddress None;  ///< Value representing an empty/invalid address
     static const IpAddress Any;  ///< Value representing any address (0.0.0.0)
@@ -121,7 +122,7 @@ private:
     /// Resolves the given address string
     void resolve(const std::string& address);
 
-    uint32 address_;  ///< Address stored as an unsigned 32 bits integer
+    util::uint32 address_;  ///< Address stored as an unsigned 32 bits integer
     bool is_valid_;   ///< Is the address valid?
 };
 
@@ -153,7 +154,8 @@ std::istream& operator>>(std::istream& stream, IpAddress& address);
 /// Overload of << operator to print an IP address to an output stream
 std::ostream& operator<<(std::ostream& stream, const IpAddress& address);
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // CLASS DOCUMENTATION

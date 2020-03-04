@@ -29,7 +29,8 @@
 // Terminal 1: melshare.exe 1A
 // Terminal 2: melshare.exe 1B
 
-using namespace mel;
+using namespace mahi::util;
+using namespace mahi::com;
 
 int main(int argc, char* argv[]) {
     static ColorConsoleWriter<TxtFormatter> consoleAppender;
@@ -41,16 +42,16 @@ int main(int argc, char* argv[]) {
             MelShare ms("melshare", OpenOrCreate);
             ms.write_message("Hello from C++! Please send me some data.");
             prompt("Press Enter after running 1B ...");
-            print(ms.read_data());
+            println(ms.read_data());
         }
         else if (id == "1B") {
             MelShare ms("melshare", OpenOnly);
             if (ms.is_mapped()) {
-                print(ms.read_message());
+                println(ms.read_message());
                 ms.write_data({ 1.0, 2.0, 3.0 });
             }
             else
-                print("You must run 1A first!");
+                println("You must run 1A first!");
         }
         // exmple with Packet
         else if (id == "2A") {
@@ -59,7 +60,7 @@ int main(int argc, char* argv[]) {
             packet << 3.0f << "evan";
             ms.write(packet);
             prompt("Press Enter after running 2B ...");
-            print(ms.read_data());
+            println(ms.read_data());
         }
         else if (id == "2B") {
             MelShare ms("melshare", OpenOnly);
@@ -69,14 +70,14 @@ int main(int argc, char* argv[]) {
                 std::string evan;
                 ms.read(packet);
                 packet >> three >> evan;
-                print(three);
-                print(evan);
+                println(three);
+                println(evan);
                 packet.clear();
                 packet << 1.0 << 2.0 << 3.0 << 4.0 << 5.0;
                 ms.write(packet);
             }
             else
-                print("You must run 2A first!");
+                println("You must run 2A first!");
         }
 
     }

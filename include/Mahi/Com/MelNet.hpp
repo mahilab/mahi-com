@@ -17,22 +17,21 @@
 
 #pragma once
 
-// #include <MEL/Communications/Packet.hpp>
-// #include <MEL/Communications/UdpSocket.hpp>
-// #include <MEL/Core/NonCopyable.hpp>
-#include <Mahi/Util.hpp>
-#include <Mahi/Com.hpp>
+#include <Mahi/Com/Packet.hpp>
+#include <Mahi/Com/UdpSocket.hpp>
+#include <Mahi/Util/NonCopyable.hpp>
 #include <string>
 #include <vector>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // CLASS DECLARATION
 //==============================================================================
 
 /// High-level communication class that simplifies UDP communication
-class MelNet : NonCopyable {
+class MelNet : util::NonCopyable {
 public:
     /// Default constructor. Use ports in the range of 49152 to 65535.
     MelNet(unsigned short local_port,
@@ -75,7 +74,8 @@ private:
     Packet packet_receive_;  ///< The packet used to receive data
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // CLASS DOCUMENTATION

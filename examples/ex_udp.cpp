@@ -34,7 +34,8 @@
 //
 // where 123.456.7.8 is the IP address of the server (printed by Terminal 1)
 
-using namespace mel;
+using namespace mahi::util;
+using namespace mahi::com;
 
 void server() {
     std::cout << "Starting UDP server on port 55002@" << IpAddress::get_local_address() << std::endl;

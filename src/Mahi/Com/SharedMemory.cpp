@@ -1,5 +1,5 @@
-// #include <MEL/Communications/SharedMemory.hpp>
-// #include <MEL/Logging/Log.hpp>
+// #include <Mahi/Com/SharedMemory.hpp>
+// #include <Mahi/Logging/Log.hpp>
 #include <Mahi/Util.hpp>
 #include <Mahi/Com.hpp>
 #include <cstring>
@@ -19,7 +19,10 @@
 #include <unistd.h>
 #endif
 
-namespace mel {
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // COMMON IMPLEMENTATION
@@ -215,4 +218,5 @@ void SharedMemory::unmap_buffer(void* buffer, std::size_t size) {
 
 #endif
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com

@@ -1,10 +1,13 @@
-// #include <MEL/Communications/MelShare.hpp>
-// #include <MEL/Core/Types.hpp>
-// #include <MEL/Communications/Packet.hpp>
-#include <Mahi/Util.hpp>
-#include <Mahi/Com.hpp>
+#include <Mahi/Com/MelShare.hpp>
+#include <Mahi/Util/Types.hpp>
+#include <Mahi/Com/Packet.hpp>
+// #include <Mahi/Util.hpp>
+// #include <Mahi/Com.hpp>
 
-namespace mel {
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // CLASS DEFINITIONS
@@ -85,4 +88,5 @@ uint32 MelShare::get_size() {
 }
 
 
-} // namespace mel
+} // namespace mahi
+} // namespace com

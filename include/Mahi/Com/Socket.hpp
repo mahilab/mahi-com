@@ -21,9 +21,8 @@
 
 #pragma once
 
-// #include <MEL/Core/NonCopyable.hpp>
-// #include <MEL/Core/Types.hpp>
-#include <Mahi/Util.hpp>
+#include <Mahi/Util/NonCopyable.hpp>
+#include <Mahi/Util/Types.hpp>
 #include <vector>
 
 #ifdef _WIN32
@@ -34,7 +33,8 @@
 
 struct sockaddr_in;
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // TYPEDEFS
@@ -63,7 +63,7 @@ class SocketSelector;
 //==============================================================================
 
 /// Base class for all the socket types
-class Socket : NonCopyable {
+class Socket : util::NonCopyable {
 public:
     /// Types of protocols that the socket can use
     enum Type {
@@ -144,7 +144,7 @@ private:
     friend class SocketSelector;
 
     /// Create an internal sockaddr_in address
-    static sockaddr_in create_address(uint32 address, unsigned short port);
+    static sockaddr_in create_address(util::uint32 address, unsigned short port);
 
     /// Return the value of the invalid socket
     static SocketHandle invalid_socket();
@@ -164,7 +164,8 @@ private:
     bool is_blocking_;     ///< Current blocking mode of the socket
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // CLASS DOCUMENTATION

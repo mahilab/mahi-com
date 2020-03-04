@@ -1,8 +1,11 @@
-// #include <MEL/Communications/SerialPort.hpp>
+// #include <Mahi/Com/SerialPort.hpp>
 #include <Mahi/Com.hpp>
 #include "Detail/rs232.h"
 
-namespace mel {
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 SerialPort::SerialPort(std::size_t port, std::size_t baudrate, std::string mode) :
     is_open_(false),
@@ -63,4 +66,5 @@ bool SerialPort::is_open() const {
 
 
 
-} // namespace mel
+} // namespace mahi
+} // namespace com

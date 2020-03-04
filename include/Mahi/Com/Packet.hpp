@@ -21,12 +21,12 @@
 
 #pragma once
 
-// #include <MEL/Core/Types.hpp>
-#include <Mahi/Util.hpp>
+#include <Mahi/Util/Types.hpp>
 #include <string>
 #include <vector>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // FORARD DECLARATIONS
@@ -120,14 +120,14 @@ public:
 
     /// Overloads of operator >> to read data from the packet
     Packet& operator>>(bool& data);
-    Packet& operator>>(int8& data);
-    Packet& operator>>(uint8& data);
-    Packet& operator>>(int16& data);
-    Packet& operator>>(uint16& data);
-    Packet& operator>>(int32& data);
-    Packet& operator>>(uint32& data);
-    Packet& operator>>(int64& data);
-    Packet& operator>>(uint64& data);
+    Packet& operator>>(util::int8& data);
+    Packet& operator>>(util::uint8& data);
+    Packet& operator>>(util::int16& data);
+    Packet& operator>>(util::uint16& data);
+    Packet& operator>>(util::int32& data);
+    Packet& operator>>(util::uint32& data);
+    Packet& operator>>(util::int64& data);
+    Packet& operator>>(util::uint64& data);
     Packet& operator>>(float& data);
     Packet& operator>>(double& data);
     Packet& operator>>(char* data);
@@ -138,14 +138,14 @@ public:
 
     /// Overloads of operator << to write data into the packet
     Packet& operator<<(bool data);
-    Packet& operator<<(int8 data);
-    Packet& operator<<(uint8 data);
-    Packet& operator<<(int16 data);
-    Packet& operator<<(uint16 data);
-    Packet& operator<<(int32 data);
-    Packet& operator<<(uint32 data);
-    Packet& operator<<(int64 data);
-    Packet& operator<<(uint64 data);
+    Packet& operator<<(util::int8 data);
+    Packet& operator<<(util::uint8 data);
+    Packet& operator<<(util::int16 data);
+    Packet& operator<<(util::uint16 data);
+    Packet& operator<<(util::int32 data);
+    Packet& operator<<(util::uint32 data);
+    Packet& operator<<(util::int64 data);
+    Packet& operator<<(util::uint64 data);
     Packet& operator<<(float data);
     Packet& operator<<(double data);
     Packet& operator<<(const char* data);
@@ -221,7 +221,8 @@ Packet& Packet::operator<<(const std::vector<T>& data) {
     return *this;
 }
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // CLASS DOCUMENTATION
@@ -280,7 +281,7 @@ Packet& Packet::operator<<(const std::vector<T>& data) {
 /// Packets have built-in operator >> and << overloads for
 /// standard types:
 /// \li bool
-/// \li fixed-size integer types (mel::int8/16/32, mel::uint8/16/32)
+/// \li fixed-size integer types (mel::int8/16/32, mel::util::uint8/16/32)
 /// \li floating point numbers (float, double)
 /// \li string types (char*, wchar_t*, std::string, std::wstring, mel::String)
 ///

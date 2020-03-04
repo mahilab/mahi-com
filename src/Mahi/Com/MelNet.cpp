@@ -1,9 +1,12 @@
-// #include <MEL/Communications/MelNet.hpp>
-// #include <MEL/Core/Console.hpp>
-#include <Mahi/Util.hpp>
+#include <Mahi/Com/MelNet.hpp>
+#include <Mahi/Util/Console.hpp>
+// #include <Mahi/Util.hpp>
 #include <Mahi/Com.hpp>
 
-namespace mel {
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // CLASS DEFINITIONS
@@ -77,4 +80,5 @@ bool MelNet::is_blocking() const {
     return socket_.is_blocking();
 }
 
-} // namespace mel
+} // namespace mahi
+} // namespace com

@@ -16,16 +16,17 @@
 // Author(s): Evan Pezent (epezent@rice.edu)
 
 #pragma once
-// #include <MEL/Core/NonCopyable.hpp>
-// #include <MEL/Communications/SerialSettings.hpp>
+// #include <Mahi/Core/NonCopyable.hpp>
+// #include <Mahi/Communications/SerialSettings.hpp>
 #include <Mahi/Util.hpp>
 #include <Mahi/Com.hpp>
 #include <string>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 /// Interface to RS-232 Serial Port
-class SerialPort : NonCopyable {
+class SerialPort : util::NonCopyable {
 public:
 
     /// Constructor
@@ -66,4 +67,5 @@ private:
     std::string mode_;
 };
 
-} // namespace mel
+} // namespace mahi
+} // namespace com

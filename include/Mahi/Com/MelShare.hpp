@@ -17,16 +17,15 @@
 
 #pragma once
 
-// #include <MEL/Communications/SharedMemory.hpp>
-// #include <MEL/Core/NonCopyable.hpp>
-// #include <MEL/Core/Types.hpp>
-// #include <MEL/Utility/NamedMutex.hpp>
-#include <Mahi/Util.hpp>
-#include <Mahi/Com.hpp>
+#include <Mahi/Com/SharedMemory.hpp>
+#include <Mahi/Util/NonCopyable.hpp>
+#include <Mahi/Util/Types.hpp>
+#include <Mahi/Util/Concurrency/NamedMutex.hpp>
 #include <string>
 #include <vector>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 class Packet;
 
@@ -35,11 +34,11 @@ class Packet;
 //==============================================================================
 
 /// High-level communication class that simplifies shared memory communication
-class MelShare : NonCopyable {
+class MelShare : util::NonCopyable {
 public:
 
     /// Default constructor.
-    MelShare(const std::string& name, OpenMode mode = OpenOrCreate, std::size_t max_bytes = 256);
+    MelShare(const std::string& name, util::OpenMode mode = util::OpenOrCreate, std::size_t max_bytes = 256);
 
     /// Writes a Packet to the MelShare
     void write(Packet& packet);
@@ -64,11 +63,12 @@ public:
 
 private:
     /// Gets the number of bytes currently stored in the MelShare
-    uint32 get_size();
+    util::uint32 get_size();
 
 private:
     SharedMemory shm_;  ///< The memory mapped file for the data
-    NamedMutex mutex_;  ///< The mutex guarding the memory map
+    util::NamedMutex mutex_;  ///< The mutex guarding the memory map
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com

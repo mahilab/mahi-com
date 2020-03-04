@@ -58,6 +58,7 @@ set_target_properties(com PROPERTIES DEBUG_POSTFIX -d)
 target_compile_features(com PUBLIC cxx_std_11)
 install(TARGETS com EXPORT mahi-com-targets LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 set_target_properties(com PROPERTIES OUTPUT_NAME "mahi-com")
+target_link_libraries(com mahi::util)
 
 # defines
 target_compile_definitions(com PUBLIC MAHI_COM) # for compatibility checks
@@ -91,6 +92,7 @@ if(WIN32)
             -DNOMINMAX                         # remove min/max macros
             -D_WINSOCK_DEPRECATED_NO_WARNINGS  # remove winsock deprecated warnings
     )
+    target_link_libraries(com ws2_32)
 
 endif(WIN32)
 
@@ -106,7 +108,7 @@ if (NI_LRT)
             rt # Realtime Extensions library
     )
     if (CMAKE_SYSTEM_PROCESSOR MATCHES ARM)
-        add_subdirectory(src/mahi/com/NI/MyRio)
+        add_subdirectory(src/MAHI/Com/NI/MyRio)
     endif()
 endif()
 

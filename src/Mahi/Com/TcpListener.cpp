@@ -1,6 +1,6 @@
-// #include <MEL/Communications/TcpListener.hpp>
-// #include <MEL/Communications/TcpSocket.hpp>
-// #include <MEL/Logging/Log.hpp>
+// #include <Mahi/Com/TcpListener.hpp>
+// #include <Mahi/Com/TcpSocket.hpp>
+// #include <Mahi/Logging/Log.hpp>
 #include <Mahi/Util.hpp>
 #include <Mahi/Com.hpp>
 #include <iostream>
@@ -29,8 +29,10 @@
 #include <fcntl.h>
 #endif
 
-namespace mel
-{
+using namespace mahi::util;
+
+namespace mahi {
+namespace com {
 
 TcpListener::TcpListener() :
 Socket(Tcp)
@@ -69,7 +71,7 @@ Socket::Status TcpListener::listen(unsigned short port, const IpAddress& address
     if (bind(get_handle(), reinterpret_cast<sockaddr*>(&addr), sizeof(addr)) == -1)
     {
         // Not likely to happen, but...
-        LOG(mel::Error) << "Failed to bind listener socket to port " << port;
+        LOG(util::Error) << "Failed to bind listener socket to port " << port;
         return Error;
     }
 
@@ -77,7 +79,7 @@ Socket::Status TcpListener::listen(unsigned short port, const IpAddress& address
     if (::listen(get_handle(), SOMAXCONN) == -1) // backlog = 0 failed on Linux
     {
         // Oops, socket is deaf
-        LOG(mel::Error) << "Failed to listen to port " << port;
+        LOG(util::Error) << "Failed to listen to port " << port;
         return Error;
     }
     return Done;
@@ -94,7 +96,7 @@ Socket::Status TcpListener::accept(TcpSocket& socket)
     // Make sure that we're listening
     if (get_handle() == Socket::invalid_socket())
     {
-        LOG(mel::Error) << "Failed to accept a new connection, the socket is not listening";
+        LOG(util::Error) << "Failed to accept a new connection, the socket is not listening";
         return Error;
     }
 
@@ -114,7 +116,8 @@ Socket::Status TcpListener::accept(TcpSocket& socket)
     return Done;
 }
 
-} // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // APAPTED FROM: SFML (https://www.sfml-dev.org/)

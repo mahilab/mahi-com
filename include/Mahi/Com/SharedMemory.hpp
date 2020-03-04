@@ -17,13 +17,13 @@
 
 #pragma once
 
-// #include <MEL/Core/NonCopyable.hpp>
-// #include <MEL/Core/Types.hpp>
-#include <Mahi/Util.hpp>
+#include <Mahi/Util/NonCopyable.hpp>
+#include <Mahi/Util/Types.hpp>
 #include <string>
 #include <vector>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // TYPEDEFS
@@ -40,11 +40,11 @@ typedef int MapHandle;
 //==============================================================================
 
 /// Encapsulates a unmanaged named memory map
-class SharedMemory : NonCopyable {
+class SharedMemory : util::NonCopyable {
 public:
 
     /// Default constructor. Creates or opens a memory map containing size bytes
-    SharedMemory(const std::string& name, OpenMode mode, std::size_t max_bytes = 256);
+    SharedMemory(const std::string& name, util::OpenMode mode, std::size_t max_bytes = 256);
 
     /// Default destructor. Closes the named memory map.
     ~SharedMemory();
@@ -88,7 +88,8 @@ private:
     bool is_mapped_;               ///< true if the SharedMemory was successfully mapped
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // CLASS DOCUMENTATION

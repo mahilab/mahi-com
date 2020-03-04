@@ -21,11 +21,12 @@
 
 #pragma once
 
-// #include <MEL/Communications/IpAddress.hpp>
-// #include <MEL/Communications/Socket.hpp>
+// #include <Mahi/Communications/IpAddress.hpp>
+// #include <Mahi/Communications/Socket.hpp>
 #include <Mahi/Com.hpp>
 
-namespace mel {
+namespace mahi {
+namespace com {
 
 //==============================================================================
 // FORWARD DECLARATIONS
@@ -71,7 +72,8 @@ public:
     Status accept(TcpSocket& socket);
 };
 
-}  // namespace mel
+} // namespace mahi
+} // namespace com
 
 //==============================================================================
 // CLASS DOCUMENTATIOIN

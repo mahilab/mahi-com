@@ -31,7 +31,8 @@
 // To see this example in action, start this exectable then run MelScope.pyw
 // and open the provided example.scope file.
 
-using namespace mel;
+using namespace mahi::util;
+using namespace mahi::com;
 
 ctrl_bool stop(false);
 bool handler(CtrlEvent event) {
