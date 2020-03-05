@@ -42,16 +42,16 @@ int main(int argc, char* argv[]) {
             MelShare ms("melshare", OpenOrCreate);
             ms.write_message("Hello from C++! Please send me some data.");
             prompt("Press Enter after running 1B ...");
-            println(ms.read_data());
+            print_var(ms.read_data());
         }
         else if (id == "1B") {
             MelShare ms("melshare", OpenOnly);
             if (ms.is_mapped()) {
-                println(ms.read_message());
+                print_var(ms.read_message());
                 ms.write_data({ 1.0, 2.0, 3.0 });
             }
             else
-                println("You must run 1A first!");
+                print("You must run 1A first!");
         }
         // exmple with Packet
         else if (id == "2A") {
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
             packet << 3.0f << "evan";
             ms.write(packet);
             prompt("Press Enter after running 2B ...");
-            println(ms.read_data());
+            print_var(ms.read_data());
         }
         else if (id == "2B") {
             MelShare ms("melshare", OpenOnly);
@@ -70,14 +70,14 @@ int main(int argc, char* argv[]) {
                 std::string evan;
                 ms.read(packet);
                 packet >> three >> evan;
-                println(three);
-                println(evan);
+                print_var(three);
+                print_var(evan);
                 packet.clear();
                 packet << 1.0 << 2.0 << 3.0 << 4.0 << 5.0;
                 ms.write(packet);
             }
             else
-                println("You must run 2A first!");
+                print("You must run 2A first!");
         }
 
     }

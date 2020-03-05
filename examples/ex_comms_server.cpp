@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
         ("h,help",     "Help");
     auto user_input = options.parse(argc, argv);
     if (user_input.count("help") > 0) {
-        print(options.help());
+        print("{}",options.help());
         return 0;
     }
 

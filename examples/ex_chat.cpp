@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
         }
     }
     else {
-        print(options.help());
+        print("{}",options.help());
         print("  Examples:");
         print("    Server:     ./chat.exe -s");
         print("    User (LAN): ./chat.exe -u epezent");
@@ -358,9 +358,9 @@ void Client::run() {
             Lock lock(mutex);
             if (!connected)
                 break;
-            if (ch == KEY_ESCAPE)
+            if (ch == (char)KEY_ESCAPE)
                 STOP = true;
-            else if (ch == KEY_ENTER) {
+            else if (ch == (char)KEY_ENTER) {
                 if (message.length() > 0) {
                     if (message == "cls" || message == "clear") {
                         cls();
@@ -379,7 +379,7 @@ void Client::run() {
                     }
                 }
             }
-            else if (ch == KEY_BACKSPACE) {
+            else if (ch == (char)KEY_BACKSPACE) {
                 if (message.length() > 0) {
                     message.pop_back();
                     cout << "\b \b";
@@ -405,9 +405,9 @@ void Client::clear_input() {
 }
 
 void Client::resume_input() {
-    set_text_color(Color::Green);
+    set_text_color(ConsoleColor::Green);
     cout << username << ": ";
-    set_text_color(Color::None);
+    set_text_color(ConsoleColor::None);
     cout << message;
 }
 
@@ -434,11 +434,11 @@ void Client::messaging_thread_func() {
                 }
                 // print messages
                 if (other_username == "Server")
-                    set_text_color(Color::Magenta);
+                    set_text_color(ConsoleColor::Magenta);
                 else
-                    set_text_color(Color::Cyan);
+                    set_text_color(ConsoleColor::Cyan);
                 cout << other_username << ": ";
-                set_text_color(Color::None);
+                set_text_color(ConsoleColor::None);
                 cout << other_message << endl;
                 beep();
             }

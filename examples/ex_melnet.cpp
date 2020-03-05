@@ -48,24 +48,26 @@
 using namespace mahi::util;
 using namespace mahi::com;
 
-void blocking_A(std::string remote_host) {
+void blocking_A(std::string remote_host)
+{
     // make MelNet A
     MelNet melnetA(55001, 55002, IpAddress(remote_host));
     // wait to receive data
     std::vector<double> data = melnetA.receive_data();
-    println(data);
+    print_var(data);
     // send new data
     data = {5, 6, 7, 8, 9};
     melnetA.send_data(data);
     // wait to receive message
     std::string message = melnetA.receive_message();
-    println(message);
+    print_var(message);
     // send new message
     message += ", World!";
     melnetA.send_message(message);
 }
 
-void blocking_B(std::string remote_host) {
+void blocking_B(std::string remote_host)
+{
     // make MelNet B
     MelNet melnetB(55002, 55001, IpAddress(remote_host));
     // send data
@@ -73,56 +75,63 @@ void blocking_B(std::string remote_host) {
     melnetB.send_data(data);
     // wait to receive new data
     data = melnetB.receive_data();
-    println(data);
+    print_var(data);
     // send message
     std::string message = "Hello";
     Clock clock;
     melnetB.send_message(message);
     // wait to receive new message
     message = melnetB.receive_message();
-    println(clock.get_elapsed_time());
-    println(message);
+    print_var(clock.get_elapsed_time());
+    print_var(message);
 }
 
-void nonblocking_A(std::string remote_host) {
+void nonblocking_A(std::string remote_host)
+{
     // make MelNet A
     MelNet melnetA(55001, 55002, IpAddress(remote_host), false);
     while (!melnetA.check_request())
-        println("Waiting to Feed B");
-    println("Feeding B");
+        print("Waiting to Feed B");
+    print("Feeding B");
     melnetA.send_data({0, 1, 2, 3, 4});
     while (!melnetA.check_request())
-        println("Waiting to Feed B");
-    println("Feeding B again, he's really hungy!");
+        print("Waiting to Feed B");
+    print("Feeding B again, he's really hungy!");
     melnetA.send_data({5, 6, 7, 8, 9});
 }
 
-void nonblocking_B(std::string remote_host) {
+void nonblocking_B(std::string remote_host)
+{
     // make MelNet B
     MelNet melnetB(55002, 55001, IpAddress(remote_host), true);
     melnetB.request();
     std::vector<double> data = melnetB.receive_data();
-    println(data);
+    print_var(data);
     prompt("Press ENTER for more!");
     melnetB.request();
     data = melnetB.receive_data();
-    println(data);
+    print_var(data);
 }
 
-int main(int argc, char* argv[]) {
-    if (argc > 3) {
-        std::string mode        = argv[1];
-        std::string id          = argv[2];
+int main(int argc, char *argv[])
+{
+    if (argc > 3)
+    {
+        std::string mode = argv[1];
+        std::string id = argv[2];
         std::string remote_host = argv[3];
-        println("Mode:        " + mode);
-        println("ID:          " + id);
-        println("Remote Host: " + remote_host);
-        if (mode == "blocking") {
+        print("Mode:        {}", mode);
+        print("ID:          {}", id);
+        print("Remote Host: {}", remote_host);
+        if (mode == "blocking")
+        {
             if (id == "A")
                 blocking_A(remote_host);
             else if (id == "B")
                 blocking_B(remote_host);
-        } else if (mode == "nonblocking") {
+        }
+        else if (mode == "nonblocking")
+        {
             if (id == "A")
                 nonblocking_A(remote_host);
             else if (id == "B")

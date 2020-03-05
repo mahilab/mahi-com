@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 
     // make MelNet
     MelNet mn(55001, 55002, remote_address, false);
-    print("MELNet: (lp:55002, rp:55001, ra:" + remote_address.to_string() + ")");
+    print("MELNet: (lp:55002, rp:55001, ra: {})", remote_address.to_string());
 
     // make MelShare (Windows only, and prefered over MelNet)
     MelShare ms("melscope");

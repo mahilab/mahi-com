@@ -9,8 +9,7 @@ cmake_minimum_required(VERSION 3.13.0)
 #===============================================================================
 
 # General
-option(MAHI_COM_EXAMPLES "Turn ON to build example executable(s)" OFF)
-option(MAHI_COM_OUTPUT_LOGS "Turn ON to output log messages" ON)
+option(MAHI_COM_EXAMPLES "Turn ON to build example executable(s)" ON)
 
 #===============================================================================
 # FRONT MATTER
@@ -18,16 +17,6 @@ option(MAHI_COM_OUTPUT_LOGS "Turn ON to output log messages" ON)
 
 # create the project
 project(mahi-com VERSION 1.0.0 LANGUAGES C CXX)
-
-# add mahi-util to the project
-include(FetchContent)
-# add_subdirectory("mahi-gui")
-FetchContent_Declare(mahi-util GIT_REPOSITORY https://github.com/mahilab/mahi-util.git)
-FetchContent_MakeAvailable(mahi-util)
-
-# FetchContent_Declare(mahi-util
-#                     GIT_REPOSITORY https://github.com/mahilab/mahi-util.git)
-# FetchContent_MakeAvailable(mahi-util)
 
 # tell user they can't have shared version if they try
 if (BUILD_SHARED_LIBS)
@@ -49,6 +38,14 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 endif()
 
 #===============================================================================
+# MAHI UTIL
+#===============================================================================
+
+include(FetchContent) 
+FetchContent_Declare(mahi-util GIT_REPOSITORY https://github.com/mahilab/mahi-util.git) 
+FetchContent_MakeAvailable(mahi-util)
+
+#===============================================================================
 # CREATE LIBRARY
 #===============================================================================
 
@@ -62,9 +59,6 @@ target_link_libraries(com mahi::util)
 
 # defines
 target_compile_definitions(com PUBLIC MAHI_COM) # for compatibility checks
-if (MAHI_COM_OUTPUT_LOGS)    
-    target_compile_definitions(com PUBLIC MAHI_COM_OUTPUT_LOGS)
-endif()
 
 # add source files
 add_subdirectory(src/Mahi/Com)

@@ -47,19 +47,19 @@ int main(int argc, char *argv[]) {
             prompt("Press Enter after executing B");
             std::vector<double> data(4);
             map.read(&data[0], 32);
-            println(data);
+            print_var(data);
         }
         else if (id == "1B") {
             // create shared memory map (same string name as A)
             SharedMemory map("my_map", OpenOnly, 512);
             if (!map.is_mapped()) {
-                println("You must run 1A first!");
+                print("You must run 1A first!");
                 return -1;
             }
             // receive message
             char msg[4];
             map.read(msg, 4);
-            println(msg);
+            print_var(msg);
             // write data
             std::vector<double> data = {1.0, 2.0, 3.0, 4.0};
             map.write(&data[0], 32); // 4 double * 8 byte/double = 32 bytes
@@ -71,18 +71,18 @@ int main(int argc, char *argv[]) {
             map.write(msg, 5);
             prompt("Press Enter after executing 2B");
             map.read(&msg, 5);
-            println(msg); // axcd
+            print_var(msg); // axcd
 
         }
         else if (id == "2B") {
             SharedMemory map("my_map", OpenOnly);
             if (!map.is_mapped()) {
-                println("You must run 2A first!");
+                print("You must run 2A first!");
                 return -1;
             }
             char msg[5];
             map.read(msg, 5);
-            println(msg); // abcd
+            print_var(msg); // abcd
             char x = 'x';
             map.write(&x, 1, 1);
         }
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
             map.write(&data[0], 20);
             prompt("Press Enter after executing 3B");
             map.read(&data[0], 20);
-            println(data); // {1, 2, 16, 4, 5}
+            print_var(data); // {1, 2, 16, 4, 5}
 
         }
         else if (id == "3B") {

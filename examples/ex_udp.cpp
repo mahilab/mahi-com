@@ -99,11 +99,11 @@ void client(int iterations, int bytes, const IpAddress& remote_address) {
     // Print results
     int mean_ping = (int)mean(pings);
     int std_ping = (int)stddev_p(pings);
-    int min_ping = (int)min(pings);
-    int max_ping = (int)max(pings);
-    print("Avg Ping: " + stringify(mean_ping) + " +/- " + stringify(std_ping) + " usec");
-    print("Min Ping: " + stringify(min_ping) + " usec");
-    print("Max Ping: " + stringify(max_ping) + " usec");
+    int min_ping = (int)min_element(pings);
+    int max_ping = (int)max_element(pings);
+    print("Avg Ping: {} +/- {} usec", mean_ping, std_ping);
+    print("Min Ping: {} usec", min_ping);
+    print("Max Ping: {} usec", max_ping);
 
 }
 
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
     ("h,help", "Help Message");
     auto input = options.parse(argc, argv);
     if (input.count("h") > 0) {
-        print(options.help());
+        print("{}",options.help());
         return 0;
     }
 
