@@ -16,16 +16,16 @@
 
 #pragma once
 
-#include <MAHI/Com/Http.hpp>
-#include <MAHI/Com/IpAddress.hpp>
-#include <MAHI/Com/MelNet.hpp>
-#include <MAHI/Com/MelShare.hpp>
-#include <MAHI/Com/Packet.hpp>
-#include <MAHI/Com/SerialPort.hpp>
-#include <MAHI/Com/SerialSettings.hpp>
-#include <MAHI/Com/SharedMemory.hpp>
-#include <MAHI/Com/Socket.hpp>
-#include <MAHI/Com/SocketSelector.hpp>
-#include <MAHI/Com/TcpListener.hpp>
-#include <MAHI/Com/TcpSocket.hpp>
-#include <MAHI/Com/UdpSocket.hpp>
+#include <Mahi/Com/Http.hpp>
+#include <Mahi/Com/IpAddress.hpp>
+#include <Mahi/Com/MelNet.hpp>
+#include <Mahi/Com/MelShare.hpp>
+#include <Mahi/Com/Packet.hpp>
+#include <Mahi/Com/SerialPort.hpp>
+#include <Mahi/Com/SerialSettings.hpp>
+#include <Mahi/Com/SharedMemory.hpp>
+#include <Mahi/Com/Socket.hpp>
+#include <Mahi/Com/SocketSelector.hpp>
+#include <Mahi/Com/TcpListener.hpp>
+#include <Mahi/Com/TcpSocket.hpp>
+#include <Mahi/Com/UdpSocket.hpp>
