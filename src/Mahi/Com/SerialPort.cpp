@@ -7,13 +7,9 @@ using namespace mahi::util;
 namespace mahi {
 namespace com {
 
-SerialPort::SerialPort(std::size_t port, std::size_t baudrate, std::string mode) :
-    is_open_(false),
-    port_(port),
-    baudrate_(baudrate),
-    mode_(mode)
+SerialPort::SerialPort() :  
+    is_open_(false) 
 {
-
 }
 
 SerialPort::~SerialPort() {
@@ -21,7 +17,11 @@ SerialPort::~SerialPort() {
         close();
 }
 
-bool SerialPort::open() {
+bool SerialPort::open(std::size_t port, std::size_t baudrate, std::string mode) {
+    port_= port;
+    baudrate_ = baudrate;
+    mode_ = mode;
+
     if (is_open())
         close();
     if (RS232_OpenComport(static_cast<int>(port_), static_cast<int>(baudrate_), mode_.c_str()) == 1)
@@ -63,8 +63,6 @@ bool SerialPort::close() {
 bool SerialPort::is_open() const {
     return is_open_;
 }
-
-
 
 } // namespace mahi
 } // namespace com

@@ -29,14 +29,14 @@ namespace com {
 class SerialPort : util::NonCopyable {
 public:
 
-    /// Constructor
-    SerialPort(std::size_t port, std::size_t baudrate = 9600, std::string mode = "8N1");
+    /// Default constructor. Creates an empty (invalid) serialport
+    SerialPort();
 
     /// Destructor
     ~SerialPort();
 
     /// Opens communication on specified port
-    bool open();
+    bool open(std::size_t port, std::size_t baudrate = 9600, std::string mode = "8N1");
 
     /// Closes communication on specified port
     bool close();
