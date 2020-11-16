@@ -17,7 +17,7 @@ SerialPort::~SerialPort() {
         close();
 }
 
-bool SerialPort::open(std::size_t port, std::size_t baudrate, std::string mode) {
+bool SerialPort::open(Port port, std::size_t baudrate, std::string mode) {
     port_= port;
     baudrate_ = baudrate;
     mode_ = mode;
