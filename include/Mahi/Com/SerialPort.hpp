@@ -124,7 +124,7 @@ public:
 private:
 
     bool is_open_;
-    std::size_t port_;
+    Port port_;
     std::size_t baudrate_;
     std::string mode_;
 };
