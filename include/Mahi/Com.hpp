@@ -22,7 +22,6 @@
 #include <Mahi/Com/MelShare.hpp>
 #include <Mahi/Com/Packet.hpp>
 #include <Mahi/Com/SerialPort.hpp>
-#include <Mahi/Com/SerialSettings.hpp>
 #include <Mahi/Com/SharedMemory.hpp>
 #include <Mahi/Com/Socket.hpp>
 #include <Mahi/Com/SocketSelector.hpp>
