@@ -11,8 +11,8 @@ int main() {
     SerialPort comm4;
     SerialPort comm5;
 
-    comm4.open(3, 9600);
-    comm5.open(4, 9600);
+    comm4.open(COM4, 9600);
+    comm5.open(COM5, 9600);
 
     unsigned char send[5] = "abcd";
 
