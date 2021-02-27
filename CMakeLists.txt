@@ -97,13 +97,9 @@ endif(WIN32)
 if (NI_LRT)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
     target_link_libraries(com
-        PRIVATE
             dl # Dynamic Linking Library
             rt # Realtime Extensions library
     )
-    if (CMAKE_SYSTEM_PROCESSOR MATCHES ARM)
-        add_subdirectory(src/MAHI/Com/NI/MyRio)
-    endif()
 endif()
 
 #===============================================================================
