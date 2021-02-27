@@ -11,8 +11,8 @@ int main() {
     SerialPort comm4;
     SerialPort comm5;
 
-    comm4.open(3, 9600); // 3 = COM4
-    comm5.open(4, 9600); // 4 = COM5
+    comm4.open((Port)3, 9600); // 3 = COM4 ... prefer using platform specific Port enum in SerialPort.hpp
+    comm5.open((Port)4, 9600); // 4 = COM5 ... prefer using platform specific Port enum in SerialPort.hpp
 
     unsigned char send[5] = "abcd";
 
