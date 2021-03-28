@@ -33,9 +33,9 @@
 #ifndef rs232_INCLUDED
 #define rs232_INCLUDED
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+//#ifdef __cplusplus
+//extern "C" {
+//#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -61,6 +61,25 @@ extern "C" {
 
 #endif
 
+#if defined(__APPLE__)
+int RS232_OpenComport(std::string, int, const char *);
+int RS232_PollComport(std::string, unsigned char *, int);
+int RS232_SendByte(std::string, unsigned char);
+int RS232_SendBuf(std::string, unsigned char *, int);
+void RS232_CloseComport(std::string);
+void RS232_cputs(std::string, const char *);
+int RS232_IsDCDEnabled(std::string);
+int RS232_IsCTSEnabled(std::string);
+int RS232_IsDSREnabled(std::string);
+void RS232_enableDTR(std::string);
+void RS232_disableDTR(std::string);
+void RS232_enableRTS(std::string);
+void RS232_disableRTS(std::string);
+void RS232_flushRX(std::string);
+void RS232_flushTX(std::string);
+void RS232_flushRXTX(std::string);
+int RS232_GetPortnr(const char *);
+#else
 int RS232_OpenComport(int, int, const char *);
 int RS232_PollComport(int, unsigned char *, int);
 int RS232_SendByte(int, unsigned char);
@@ -78,10 +97,11 @@ void RS232_flushRX(int);
 void RS232_flushTX(int);
 void RS232_flushRXTX(int);
 int RS232_GetPortnr(const char *);
-
-#ifdef __cplusplus
-} /* extern "C" */
 #endif
+
+//#ifdef __cplusplus
+//} /* extern "C" */
+//#endif
 
 #endif
 

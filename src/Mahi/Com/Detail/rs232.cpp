@@ -32,6 +32,7 @@
 
 
 #include "rs232.hpp"
+#include <string>
 
 
 #if defined(__linux__) || defined(__FreeBSD__) || defined(__unix__) || \
@@ -44,14 +45,15 @@ int error;
 
 #if defined(__APPLE__)
   std::unordered_map<std::string,int> Cport;
-  typedef Port std::string;
+  std::unordered_map<std::string,termios> old_port_settings;
+  typedef std::string Port;
 #else
   int Cport[RS232_PORTNR];
-  typedef Port int;
+  old_port_settings[RS232_PORTNR];
+  typedef int Port;
 #endif
 
-struct termios new_port_settings,
-       old_port_settings[RS232_PORTNR];
+struct termios new_port_settings;
 
 char *comports[RS232_PORTNR]={"/dev/ttyS0","/dev/ttyS1","/dev/ttyS2","/dev/ttyS3","/dev/ttyS4","/dev/ttyS5",
                        "/dev/ttyS6","/dev/ttyS7","/dev/ttyS8","/dev/ttyS9","/dev/ttyS10","/dev/ttyS11",
@@ -67,11 +69,13 @@ int RS232_OpenComport(Port comport_number, int baudrate, const char *mode)
   int baudr,
       status;
 
+  #ifndef __APPLE__
   if((comport_number>=RS232_PORTNR)||(comport_number<0))
   {
     printf("illegal comport number\n");
     return(1);
   }
+  #endif
 
   switch(baudrate)
   {
@@ -109,6 +113,7 @@ int RS232_OpenComport(Port comport_number, int baudrate, const char *mode)
                    break;
     case  115200 : baudr = B115200;
                    break;
+#ifndef __APPLE__
     case  230400 : baudr = B230400;
                    break;
     case  460800 : baudr = B460800;
@@ -135,6 +140,7 @@ int RS232_OpenComport(Port comport_number, int baudrate, const char *mode)
                    break;
     case 4000000 : baudr = B4000000;
                    break;
+#endif
     default      : printf("invalid baudrate\n");
                    return(1);
                    break;
@@ -203,9 +209,9 @@ http://man7.org/linux/man-pages/man3/termios.3.html
 */
 
 #if defined(__APPLE__)
-  Cport[comport_number] = open(comports[comport_number], O_RDWR | O_NOCTTY | O_NDELAY);
+  Cport[comport_number] = open(comport_number.c_str(), O_RDWR | O_NOCTTY | O_NDELAY);
 #else
-  Cport[comport_number] = open(comport_number, O_RDWR | O_NOCTTY | O_NDELAY);
+  Cport[comport_number] = open(comports[comport_number], O_RDWR | O_NOCTTY | O_NDELAY);
 #endif
 
   if(Cport[comport_number]==-1)
@@ -222,7 +228,7 @@ http://man7.org/linux/man-pages/man3/termios.3.html
     return(1);
   }
 
-  error = tcgetattr(Cport[comport_number], old_port_settings + comport_number);
+  error = tcgetattr(Cport[comport_number], &old_port_settings[comport_number]);
   if(error==-1)
   {
     close(Cport[comport_number]);
@@ -245,7 +251,7 @@ http://man7.org/linux/man-pages/man3/termios.3.html
   error = tcsetattr(Cport[comport_number], TCSANOW, &new_port_settings);
   if(error==-1)
   {
-    tcsetattr(Cport[comport_number], TCSANOW, old_port_settings + comport_number);
+    tcsetattr(Cport[comport_number], TCSANOW, &old_port_settings[comport_number]);
     close(Cport[comport_number]);
     flock(Cport[comport_number], LOCK_UN);  /* free the port so that others can use it. */
     perror("unable to adjust portsettings ");
@@ -256,7 +262,7 @@ http://man7.org/linux/man-pages/man3/termios.3.html
 
   if(ioctl(Cport[comport_number], TIOCMGET, &status) == -1)
   {
-    tcsetattr(Cport[comport_number], TCSANOW, old_port_settings + comport_number);
+    tcsetattr(Cport[comport_number], TCSANOW, &old_port_settings[comport_number]);
     flock(Cport[comport_number], LOCK_UN);  /* free the port so that others can use it. */
     perror("unable to get portstatus");
     return(1);
@@ -267,7 +273,7 @@ http://man7.org/linux/man-pages/man3/termios.3.html
 
   if(ioctl(Cport[comport_number], TIOCMSET, &status) == -1)
   {
-    tcsetattr(Cport[comport_number], TCSANOW, old_port_settings + comport_number);
+    tcsetattr(Cport[comport_number], TCSANOW, &old_port_settings[comport_number]);
     flock(Cport[comport_number], LOCK_UN);  /* free the port so that others can use it. */
     perror("unable to set portstatus");
     return(1);
@@ -347,7 +353,7 @@ void RS232_CloseComport(Port comport_number)
     perror("unable to set portstatus");
   }
 
-  tcsetattr(Cport[comport_number], TCSANOW, old_port_settings + comport_number);
+  tcsetattr(Cport[comport_number], TCSANOW, &old_port_settings[comport_number]);
   close(Cport[comport_number]);
 
   flock(Cport[comport_number], LOCK_UN);  /* free the port so that others can use it. */
@@ -789,7 +795,7 @@ void RS232_flushRXTX(int comport_number)
 #endif
 
 
-void RS232_cputs(int comport_number, const char *text)  /* sends a string to serial port */
+void RS232_cputs(Port comport_number, const char *text)  /* sends a string to serial port */
 {
   while(*text != 0)   RS232_SendByte(comport_number, *(text++));
 }
