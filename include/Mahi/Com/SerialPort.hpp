@@ -66,7 +66,7 @@ enum Port {
     cuaU2,
     cuaU3,
 };
-#else
+#elif defined(WIN32)
 enum Port {
     COM1  = 0,
     COM2  = 1,
@@ -85,6 +85,8 @@ enum Port {
     COM15 = 14,
     COM16 = 15
 };
+#else
+typedef std::string Port;
 #endif
 
 /// Interface to RS-232 Serial Port
@@ -96,6 +98,9 @@ public:
 
     /// Destructor
     ~SerialPort();
+
+    /// Returns true if SerialPort is open
+    bool is_open() const;
 
     /// Opens communication on specified port
     bool open(Port port, std::size_t baudrate = 9600, std::string mode = "8N1");
@@ -118,8 +123,6 @@ public:
     /// Flushes both data received but not read, and data written but not transmitted.
     void flush_RXTX();
 
-    /// Returns true if SerialPort is open
-    bool is_open() const;
 
 private:
 

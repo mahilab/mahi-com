@@ -31,7 +31,7 @@
 /* For more info and how to use this library, visit: http://www.teuniz.net/RS-232/ */
 
 
-#include "rs232.h"
+#include "rs232.hpp"
 
 
 #if defined(__linux__) || defined(__FreeBSD__) || defined(__unix__) || \
@@ -40,8 +40,15 @@
 #define RS232_PORTNR  38
 
 
-int Cport[RS232_PORTNR],
-    error;
+int error;
+
+#if defined(__APPLE__)
+  std::unordered_map<std::string,int> Cport;
+  typedef Port std::string;
+#else
+  int Cport[RS232_PORTNR];
+  typedef Port int;
+#endif
 
 struct termios new_port_settings,
        old_port_settings[RS232_PORTNR];
@@ -55,7 +62,7 @@ char *comports[RS232_PORTNR]={"/dev/ttyS0","/dev/ttyS1","/dev/ttyS2","/dev/ttyS3
                        "/dev/cuau0","/dev/cuau1","/dev/cuau2","/dev/cuau3",
                        "/dev/cuaU0","/dev/cuaU1","/dev/cuaU2","/dev/cuaU3"};
 
-int RS232_OpenComport(int comport_number, int baudrate, const char *mode)
+int RS232_OpenComport(Port comport_number, int baudrate, const char *mode)
 {
   int baudr,
       status;
@@ -195,7 +202,12 @@ http://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html
 http://man7.org/linux/man-pages/man3/termios.3.html
 */
 
+#if defined(__APPLE__)
   Cport[comport_number] = open(comports[comport_number], O_RDWR | O_NOCTTY | O_NDELAY);
+#else
+  Cport[comport_number] = open(comport_number, O_RDWR | O_NOCTTY | O_NDELAY);
+#endif
+
   if(Cport[comport_number]==-1)
   {
     perror("unable to open comport ");
@@ -265,7 +277,7 @@ http://man7.org/linux/man-pages/man3/termios.3.html
 }
 
 
-int RS232_PollComport(int comport_number, unsigned char *buf, int size)
+int RS232_PollComport(Port comport_number, unsigned char *buf, int size)
 {
   int n;
 
@@ -280,7 +292,7 @@ int RS232_PollComport(int comport_number, unsigned char *buf, int size)
 }
 
 
-int RS232_SendByte(int comport_number, unsigned char byte)
+int RS232_SendByte(Port comport_number, unsigned char byte)
 {
   int n = write(Cport[comport_number], &byte, 1);
   if(n < 0)
@@ -299,7 +311,7 @@ int RS232_SendByte(int comport_number, unsigned char byte)
 }
 
 
-int RS232_SendBuf(int comport_number, unsigned char *buf, int size)
+int RS232_SendBuf(Port comport_number, unsigned char *buf, int size)
 {
   int n = write(Cport[comport_number], buf, size);
   if(n < 0)
@@ -318,7 +330,7 @@ int RS232_SendBuf(int comport_number, unsigned char *buf, int size)
 }
 
 
-void RS232_CloseComport(int comport_number)
+void RS232_CloseComport(Port comport_number)
 {
   int status;
 
@@ -358,7 +370,7 @@ TIOCM_DSR       DSR (data set ready)
 http://man7.org/linux/man-pages/man4/tty_ioctl.4.html
 */
 
-int RS232_IsDCDEnabled(int comport_number)
+int RS232_IsDCDEnabled(Port comport_number)
 {
   int status;
 
@@ -369,7 +381,7 @@ int RS232_IsDCDEnabled(int comport_number)
 }
 
 
-int RS232_IsCTSEnabled(int comport_number)
+int RS232_IsCTSEnabled(Port comport_number)
 {
   int status;
 
@@ -380,7 +392,7 @@ int RS232_IsCTSEnabled(int comport_number)
 }
 
 
-int RS232_IsDSREnabled(int comport_number)
+int RS232_IsDSREnabled(Port comport_number)
 {
   int status;
 
@@ -391,7 +403,7 @@ int RS232_IsDSREnabled(int comport_number)
 }
 
 
-void RS232_enableDTR(int comport_number)
+void RS232_enableDTR(Port comport_number)
 {
   int status;
 
@@ -409,7 +421,7 @@ void RS232_enableDTR(int comport_number)
 }
 
 
-void RS232_disableDTR(int comport_number)
+void RS232_disableDTR(Port comport_number)
 {
   int status;
 
@@ -427,7 +439,7 @@ void RS232_disableDTR(int comport_number)
 }
 
 
-void RS232_enableRTS(int comport_number)
+void RS232_enableRTS(Port comport_number)
 {
   int status;
 
@@ -445,7 +457,7 @@ void RS232_enableRTS(int comport_number)
 }
 
 
-void RS232_disableRTS(int comport_number)
+void RS232_disableRTS(Port comport_number)
 {
   int status;
 
@@ -463,19 +475,19 @@ void RS232_disableRTS(int comport_number)
 }
 
 
-void RS232_flushRX(int comport_number)
+void RS232_flushRX(Port comport_number)
 {
   tcflush(Cport[comport_number], TCIFLUSH);
 }
 
 
-void RS232_flushTX(int comport_number)
+void RS232_flushTX(Port comport_number)
 {
   tcflush(Cport[comport_number], TCOFLUSH);
 }
 
 
-void RS232_flushRXTX(int comport_number)
+void RS232_flushRXTX(Port comport_number)
 {
   tcflush(Cport[comport_number], TCIOFLUSH);
 }
@@ -808,8 +820,6 @@ int RS232_GetPortnr(const char *devname)
 
   return -1;  /* device not found */
 }
-
-
 
 
 

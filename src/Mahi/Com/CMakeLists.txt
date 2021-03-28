@@ -12,6 +12,8 @@ target_sources(com
     TcpListener.cpp
     TcpSocket.cpp
     UdpSocket.cpp
-    Detail/rs232.c
-    Detail/rs232.h
+    Detail/rs232.cpp
+    Detail/rs232.hpp
+    # Detail/MacSerial.cpp
+    # Detail/MacSerial.hpp
 )
