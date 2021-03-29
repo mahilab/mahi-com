@@ -11,8 +11,14 @@ int main() {
     SerialPort comm4;
     SerialPort comm5;
 
-    comm4.open("3", 9600); // 3 = COM4 ... prefer using platform specific Port enum in SerialPort.hpp
-    comm5.open("Port)", 9600); // 4 = COM5 ... prefer using platform specific Port enum in SerialPort.hpp
+#ifdef __APPLE__
+    // these are bad comport values, so this won't work, but it will at least make it compile
+    comm4.open("Port3", 9600); // 3 = COM4 ... prefer using platform specific Port enum in SerialPort.hpp
+    comm5.open("Port4", 9600); // 4 = COM5 ... prefer using platform specific Port enum in SerialPort.hpp
+#else
+    comm4.open((Port)3, 9600); // 3 = COM4 ... prefer using platform specific Port enum in SerialPort.hpp
+    comm5.open((Port)4, 9600); // 4 = COM5 ... prefer using platform specific Port enum in SerialPort.hpp
+#endif
 
     unsigned char send[5] = "abcd";
 

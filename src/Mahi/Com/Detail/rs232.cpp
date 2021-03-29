@@ -795,7 +795,7 @@ void RS232_flushRXTX(int comport_number)
 #endif
 
 
-void RS232_cputs(Port comport_number, const char *text)  /* sends a string to serial port */
+void RS232_cputs(int comport_number, const char *text)  /* sends a string to serial port */
 {
   while(*text != 0)   RS232_SendByte(comport_number, *(text++));
 }
