@@ -209,7 +209,7 @@ http://man7.org/linux/man-pages/man3/termios.3.html
 */
 
 #if defined(__APPLE__)
-  Cport[comport_number] = open(comport_number.c_str(), O_RDWR | O_NOCTTY | O_NDELAY);
+  Cport[comport_number] = open(("/dev/" + comport_number).c_str(), O_RDWR | O_NOCTTY | O_NDELAY);
 #else
   Cport[comport_number] = open(comports[comport_number], O_RDWR | O_NOCTTY | O_NDELAY);
 #endif
