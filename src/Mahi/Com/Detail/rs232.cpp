@@ -49,7 +49,7 @@ int error;
   typedef std::string Port;
 #else
   int Cport[RS232_PORTNR];
-  old_port_settings[RS232_PORTNR];
+  termios old_port_settings[RS232_PORTNR];
   typedef int Port;
 #endif
 
