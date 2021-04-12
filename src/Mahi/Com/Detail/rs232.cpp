@@ -796,14 +796,12 @@ void RS232_flushRXTX(int comport_number)
   PurgeComm(Cport[comport_number], PURGE_TXCLEAR | PURGE_TXABORT);
 }
 
-
-#endif
-
-
 void RS232_cputs(int comport_number, const char *text)  /* sends a string to serial port */
 {
   while(*text != 0)   RS232_SendByte(comport_number, *(text++));
 }
+
+#endif
 
 
 /* return index in comports matching to device name or -1 if not found */
